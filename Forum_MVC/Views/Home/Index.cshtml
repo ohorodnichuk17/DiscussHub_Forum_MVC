@@ -1,0 +1,119 @@
+﻿@using Forum_MVC.Data.Entities;
+@model MyViewModel;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using System.Linq;
+<style>
+    .btn-outline-pink {
+        color: #FF1493;
+        background-color: transparent;
+        border-color: #FF1493;
+        width: 100%;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 10px; 
+    }
+
+    .btn-outline-pink:hover {
+        color: #FFFFFF;
+        background-color: #FF1493;
+        border-color: #FF1493;
+    }
+
+    .page-link {
+        color: #FF1493;
+        background-color: transparent;
+        border-color: #FF1493;
+    }
+
+    .page-link:hover {
+        color: #FFFFFF;
+        background-color: #FF1493;
+        border-color: #FF1493;
+    }
+
+    .page-item.active .page-link {
+        color: #FFFFFF; 
+        background-color: #FF1493; 
+        border-color: #FF1493;
+    }
+
+    body {
+        background-color: #F0F0F0;
+    }
+
+    .pink-card {
+        background-color: rgba(255, 20, 147, 0.6);
+        color: white;
+        border-color: #FF1493;
+        margin-bottom: 20px;
+        max-width: 100%;
+    }
+
+    .pink-card:hover {
+        background-color: #FF1493;
+    }
+
+    .d-flex-container {
+        display: flex;
+    }
+
+    .col-md-3 {
+        flex: 0 0 200px;
+        margin-right: 20px; 
+    }
+
+    .text-center {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+</style>
+
+
+<body>
+    <div class="d-flex-container">
+        <div class="col-md-3">
+            @if (Model.Categories != null)
+            {
+                foreach (var i in Model.Categories)
+                {
+                    <button type="button" class="btn btn-outline-pink dropdown-toggle">@i.Name</button>
+                }
+            }
+            else
+            {
+                <p>Model is null</p>
+            }
+        </div>
+
+        <div class="text-center">
+            @if (Model != null && Model.Posts.Any())
+            {
+                foreach (var i in Model.Posts )
+                {
+                    <div class="card pink-card text-white mb-3">
+                        <div class="card-header">@i.Title</div>
+                        <div class="card-body">
+                            <p class="card-text">@i.Text</p>
+                        </div>
+                    </div>
+                }
+            }
+        <nav>
+            <ul class="pagination">
+                    @for (var i = 1; i <= Math.Ceiling((double)Model.TotalPosts / Model.PageSize); i++)
+                    {
+                        <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                            <a class="page-link" href="/Home/Index?pageNumber=@i&pageSize=@Model.PageSize">@i</a>
+                        </li>
+                    }
+            </ul>
+        </nav>
+    
+            
+        </div>
+    </div>
+</body>
