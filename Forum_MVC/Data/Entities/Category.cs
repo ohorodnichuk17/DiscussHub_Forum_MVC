@@ -15,6 +15,9 @@ namespace Forum_MVC.Data.Entities
 
         public int AmountOfTopics { get; set; }
 
+        //public int TopicOfPostId { get; set; }
+        //[ForeignKey("TopicOfPostId")]
+        public ICollection<TopicOfPost>? Topics { get; set; }
         [Required]
         public string VisibilityStatus { get; set; }
         public ICollection<Post> Posts { get; set; }

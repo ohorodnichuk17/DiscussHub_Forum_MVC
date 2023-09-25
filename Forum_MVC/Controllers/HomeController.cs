@@ -23,17 +23,20 @@ namespace Forum_MVC.Controllers
                 .ToList();
 
             var categories = context.Categories.ToList();
+
+            var topicOfPosts = context.TopicsOfPosts.ToList();
+
             MyViewModel viewModel = new MyViewModel
             {
                 Posts = posts,
                 Categories = categories,
+                TopicOfPosts = topicOfPosts,
                 PageNumber = pageNumber,
                 PageSize = pageSize,
                 TotalPosts = totalPosts
             };
             return View(viewModel);
         }
-
 
         public IActionResult Privacy()
         {

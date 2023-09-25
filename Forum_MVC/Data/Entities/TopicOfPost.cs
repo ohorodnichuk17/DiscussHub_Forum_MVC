@@ -13,8 +13,9 @@ namespace Forum_MVC.Data.Entities
         [StringLength(100, MinimumLength = 3, ErrorMessage = "Name must be between 3 and 100 characters.")]
         public string Name { get; set; }
 
-        [MaxLength(255, ErrorMessage = "Description cannot exceed 255 characters.")]
-        public string Description { get; set; }
+        [MaxLength(1000, ErrorMessage = "Description cannot exceed 1000 characters.")]
+        public string? Description { get; set; }
+
 
         [Required(ErrorMessage = "The 'UserId' field is required.")]
         public int UserId { get; set; }
@@ -25,6 +26,14 @@ namespace Forum_MVC.Data.Entities
         [ForeignKey("UserId")]
         public User User { get; set; }
 
+        public int? PostId { get; set; }
+        [ForeignKey("PostId")]
+        public Post? Post { get; set; }
+
         public ICollection<Post> Posts { get; set; }
+
+        public int? CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set; }
     }
 }

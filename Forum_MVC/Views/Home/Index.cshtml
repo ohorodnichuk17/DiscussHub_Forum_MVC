@@ -12,14 +12,14 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        margin-bottom: 10px; 
+        margin-bottom: 10px;
     }
 
-    .btn-outline-pink:hover {
-        color: #FFFFFF;
-        background-color: #FF1493;
-        border-color: #FF1493;
-    }
+        .btn-outline-pink:hover {
+            color: #FFFFFF;
+            background-color: #FF1493;
+            border-color: #FF1493;
+        }
 
     .page-link {
         color: #FF1493;
@@ -27,15 +27,15 @@
         border-color: #FF1493;
     }
 
-    .page-link:hover {
-        color: #FFFFFF;
-        background-color: #FF1493;
-        border-color: #FF1493;
-    }
+        .page-link:hover {
+            color: #FFFFFF;
+            background-color: #FF1493;
+            border-color: #FF1493;
+        }
 
     .page-item.active .page-link {
-        color: #FFFFFF; 
-        background-color: #FF1493; 
+        color: #FFFFFF;
+        background-color: #FF1493;
         border-color: #FF1493;
     }
 
@@ -51,9 +51,9 @@
         max-width: 100%;
     }
 
-    .pink-card:hover {
-        background-color: #FF1493;
-    }
+        .pink-card:hover {
+            background-color: #FF1493;
+        }
 
     .d-flex-container {
         display: flex;
@@ -61,7 +61,7 @@
 
     .col-md-3 {
         flex: 0 0 200px;
-        margin-right: 20px; 
+        margin-right: 20px;
     }
 
     .text-center {
@@ -70,17 +70,57 @@
         flex-direction: column;
         align-items: center;
     }
+
+    .dropdown-item:hover {
+        color: #FF1493;
+        /*background-color: #FF1493;*/
+        border-color: #FF1493;
+    }
 </style>
 
 
 <body>
+    @*    <div class="d-flex-container">
+    <div class="col-md-3">
+    @if (Model.Categories != null)
+    {
+    foreach (var i in Model.Categories)
+    {
+    <div class="dropdown">
+    <button class="btn btn-outline-pink dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    @i.Name
+    </button>
+    <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+    </ul>
+    </div>
+    }
+    }
+    else
+    {
+    <p>Model is null</p>
+    }
+    </div>*@
+
     <div class="d-flex-container">
         <div class="col-md-3">
-            @if (Model.Categories != null)
+            @if (Model != null)
             {
-                foreach (var i in Model.Categories)
+                foreach (var category in Model.Categories)
                 {
-                    <button type="button" class="btn btn-outline-pink dropdown-toggle">@i.Name</button>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-pink dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            @category.Name
+                        </button>
+                        <ul class="dropdown-menu">
+                            @foreach (var topic in Model.TopicOfPosts.Where(t => t.CategoryId == category.Id))
+                            {
+                                <li><a class="dropdown-item" href="#">@topic.Name</a></li>
+                            }
+                        </ul>
+                    </div>
                 }
             }
             else
@@ -92,7 +132,7 @@
         <div class="text-center">
             @if (Model != null && Model.Posts.Any())
             {
-                foreach (var i in Model.Posts )
+                foreach (var i in Model.Posts)
                 {
                     <div class="card pink-card text-white mb-3">
                         <div class="card-header">@i.Title</div>
@@ -102,18 +142,19 @@
                     </div>
                 }
             }
-        <nav>
-            <ul class="pagination">
+            <nav>
+                <ul class="pagination">
                     @for (var i = 1; i <= Math.Ceiling((double)Model.TotalPosts / Model.PageSize); i++)
                     {
                         <li class="page-item @(i == Model.PageNumber ? "active" : "")">
                             <a class="page-link" href="/Home/Index?pageNumber=@i&pageSize=@Model.PageSize">@i</a>
                         </li>
                     }
-            </ul>
-        </nav>
-    
-            
+                </ul>
+            </nav>
+
+
         </div>
     </div>
+    <script src="~/js/homeIndex.js"></script>
 </body>

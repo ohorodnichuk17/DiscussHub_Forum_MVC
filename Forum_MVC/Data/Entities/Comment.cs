@@ -21,7 +21,6 @@ namespace Forum_MVC.Data.Entities
 
         [Required(ErrorMessage = "The 'UserId' field is required.")]
         public int UserId { get; set; }
-
         [ForeignKey("UserId")]
         public User User { get; set; }
 
